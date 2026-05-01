@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { OnboardingData, onboardingService } from '@/services/onboarding.service'
-import { useAuth } from '@/hooks/use-auth'
+import { useAuth } from '@/hooks/useAuth'
 import { useNavigate } from 'react-router-dom'
 import { useToast } from '@/hooks/use-toast'
 
