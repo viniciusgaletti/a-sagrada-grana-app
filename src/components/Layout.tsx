@@ -1,12 +1,50 @@
-import { Outlet, Link, useLocation } from 'react-router-dom'
+import { Outlet, Link, useLocation, useNavigate } from 'react-router-dom'
 import { ThemeToggle } from '@/components/ThemeToggle'
 import { NAV_ITEMS, SECONDARY_NAV_ITEMS, ROUTES } from '@/lib/constants'
 import { cn } from '@/lib/utils'
-import { PiggyBank } from 'lucide-react'
+import { PiggyBank, Loader2 } from 'lucide-react'
+import { useAuth } from '@/hooks/use-auth'
+import { useEffect, useState } from 'react'
+import { onboardingService } from '@/services/onboarding.service'
 
 export default function Layout() {
   const location = useLocation()
+  const navigate = useNavigate()
+  const { user, loading: authLoading } = useAuth()
+  const [checkingOnboarding, setCheckingOnboarding] = useState(true)
+
   const isAuthPage = location.pathname === ROUTES.ONBOARDING
+
+  useEffect(() => {
+    if (authLoading) return
+
+    if (!user) {
+      setCheckingOnboarding(false)
+      return
+    }
+
+    onboardingService
+      .checkOnboardingStatus(user.id)
+      .then((completed) => {
+        if (!completed && !isAuthPage) {
+          navigate(ROUTES.ONBOARDING, { replace: true })
+        } else if (completed && isAuthPage) {
+          navigate(ROUTES.HOME, { replace: true })
+        }
+        setCheckingOnboarding(false)
+      })
+      .catch(() => {
+        setCheckingOnboarding(false)
+      })
+  }, [user, authLoading, isAuthPage, navigate])
+
+  if (authLoading || checkingOnboarding) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-background">
+        <Loader2 className="h-8 w-8 animate-spin text-primary" />
+      </div>
+    )
+  }
 
   if (isAuthPage) {
     return <Outlet />

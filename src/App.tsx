@@ -1,5 +1,6 @@
 import { Suspense, lazy } from 'react'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import { AuthProvider } from '@/hooks/use-auth'
 import { Toaster } from '@/components/ui/toaster'
 import { Toaster as Sonner } from '@/components/ui/sonner'
 import { TooltipProvider } from '@/components/ui/tooltip'
@@ -28,26 +29,28 @@ const LoadingFallback = () => (
 
 const App = () => (
   <ErrorBoundary>
-    <BrowserRouter future={{ v7_startTransition: false, v7_relativeSplatPath: false }}>
-      <TooltipProvider>
-        <Toaster />
-        <Sonner />
-        <Suspense fallback={<LoadingFallback />}>
-          <Routes>
-            <Route element={<Layout />}>
-              <Route path={ROUTES.HOME} element={<Home />} />
-              <Route path={ROUTES.DASHBOARD} element={<Dashboard />} />
-              <Route path={ROUTES.ECONOMIA} element={<Economia />} />
-              <Route path={ROUTES.CONTAS} element={<Contas />} />
-              <Route path={ROUTES.CONFIGURACOES} element={<Configuracoes />} />
-              <Route path={ROUTES.RESERVA} element={<Reserva />} />
-              <Route path={ROUTES.ONBOARDING} element={<Onboarding />} />
-            </Route>
-            <Route path="*" element={<NotFound />} />
-          </Routes>
-        </Suspense>
-      </TooltipProvider>
-    </BrowserRouter>
+    <AuthProvider>
+      <BrowserRouter future={{ v7_startTransition: false, v7_relativeSplatPath: false }}>
+        <TooltipProvider>
+          <Toaster />
+          <Sonner />
+          <Suspense fallback={<LoadingFallback />}>
+            <Routes>
+              <Route element={<Layout />}>
+                <Route path={ROUTES.HOME} element={<Home />} />
+                <Route path={ROUTES.DASHBOARD} element={<Dashboard />} />
+                <Route path={ROUTES.ECONOMIA} element={<Economia />} />
+                <Route path={ROUTES.CONTAS} element={<Contas />} />
+                <Route path={ROUTES.CONFIGURACOES} element={<Configuracoes />} />
+                <Route path={ROUTES.RESERVA} element={<Reserva />} />
+                <Route path={ROUTES.ONBOARDING} element={<Onboarding />} />
+              </Route>
+              <Route path="*" element={<NotFound />} />
+            </Routes>
+          </Suspense>
+        </TooltipProvider>
+      </BrowserRouter>
+    </AuthProvider>
   </ErrorBoundary>
 )
 
