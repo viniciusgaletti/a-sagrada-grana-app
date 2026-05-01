@@ -184,7 +184,10 @@ function Step1({
           >
             Como posso te chamar?
           </h2>
-          <p className="text-sm font-sans leading-relaxed" style={{ color: 'var(--muted-foreground)' }}>
+          <p
+            className="text-sm font-sans leading-relaxed"
+            style={{ color: 'var(--muted-foreground)' }}
+          >
             Seu apelido vai aparecer na tela principal do app.
           </p>
         </div>
@@ -242,7 +245,10 @@ function Step2({
           >
             Qual é seu saldo atual?
           </h2>
-          <p className="text-sm font-sans leading-relaxed" style={{ color: 'var(--muted-foreground)' }}>
+          <p
+            className="text-sm font-sans leading-relaxed"
+            style={{ color: 'var(--muted-foreground)' }}
+          >
             Abra seu banco agora. Se você usa mais de um, some os saldos de todos e insira o total
             aqui.
           </p>
@@ -503,7 +509,10 @@ function Step4({
           >
             Gastos variáveis do mês
           </h2>
-          <p className="text-sm font-sans leading-relaxed" style={{ color: 'var(--muted-foreground)' }}>
+          <p
+            className="text-sm font-sans leading-relaxed"
+            style={{ color: 'var(--muted-foreground)' }}
+          >
             Mercado, farmácia, lazer, delivery, transporte. Some tudo e coloque aqui.
           </p>
         </div>

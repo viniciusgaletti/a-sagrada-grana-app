@@ -13,8 +13,18 @@ import type { TransactionType } from '@/types'
 // ─── Constants ────────────────────────────────────────────────────────────────
 
 const MONTH_NAMES = [
-  'Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho',
-  'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro',
+  'Janeiro',
+  'Fevereiro',
+  'Março',
+  'Abril',
+  'Maio',
+  'Junho',
+  'Julho',
+  'Agosto',
+  'Setembro',
+  'Outubro',
+  'Novembro',
+  'Dezembro',
 ]
 
 // ─── Formatters ───────────────────────────────────────────────────────────────
@@ -147,11 +157,13 @@ function InlineField({ value, status, isReadonly, label, onCommit }: FieldProps)
         onKeyDown={handleKeyDown}
         aria-label={label}
         className="w-full px-2 py-1.5 text-right text-xs font-sans rounded-lg outline-none bg-transparent focus:ring-1 focus:border"
-        style={{
-          color: 'var(--foreground)',
-          borderColor: 'var(--input)',
-          '--tw-ring-color': 'var(--input)',
-        } as React.CSSProperties}
+        style={
+          {
+            color: 'var(--foreground)',
+            borderColor: 'var(--input)',
+            '--tw-ring-color': 'var(--input)',
+          } as React.CSSProperties
+        }
       />
     )
   }
@@ -192,8 +204,7 @@ function DayRow({ day, onUpdate, onOpenDiario }: DayRowProps) {
   const isPositive = day.balance >= 0
 
   // Find status of single-type transactions for colour coding
-  const txByType = (type: TransactionType) =>
-    day.transactions.find((tx) => tx.type === type)
+  const txByType = (type: TransactionType) => day.transactions.find((tx) => tx.type === type)
 
   return (
     <div
@@ -212,7 +223,10 @@ function DayRow({ day, onUpdate, onOpenDiario }: DayRowProps) {
         >
           {day.dayNumber}
         </div>
-        <div className="text-[10px] font-sans font-normal mt-0.5" style={{ color: 'var(--muted-foreground)' }}>
+        <div
+          className="text-[10px] font-sans font-normal mt-0.5"
+          style={{ color: 'var(--muted-foreground)' }}
+        >
           {day.weekday}
         </div>
       </div>
@@ -252,12 +266,14 @@ function DayRow({ day, onUpdate, onOpenDiario }: DayRowProps) {
             txByType('diario')?.status === 'estimado' ? 'text-primary/35' : ''
           }`}
           style={{
-            background: day.diario > 0 ? 'color-mix(in srgb, var(--muted) 60%, transparent)' : 'transparent',
-            color: txByType('diario')?.status !== 'estimado'
-              ? day.diario > 0
-                ? 'var(--foreground)'
-                : 'var(--muted-foreground)'
-              : undefined,
+            background:
+              day.diario > 0 ? 'color-mix(in srgb, var(--muted) 60%, transparent)' : 'transparent',
+            color:
+              txByType('diario')?.status !== 'estimado'
+                ? day.diario > 0
+                  ? 'var(--foreground)'
+                  : 'var(--muted-foreground)'
+                : undefined,
           }}
           title="Abrir detalhamento do dia"
         >
@@ -337,7 +353,10 @@ function DiaryHeader({
       {/* Month + year */}
       <div className="flex items-center justify-between mb-1">
         <div className="flex items-center gap-3">
-          <button onClick={onPrevMonth} className="p-1 rounded-full hover:bg-[var(--muted)] transition-colors">
+          <button
+            onClick={onPrevMonth}
+            className="p-1 rounded-full hover:bg-[var(--muted)] transition-colors"
+          >
             <ChevronLeft className="w-6 h-6 text-[var(--muted-foreground)]" />
           </button>
           <h1
@@ -349,7 +368,10 @@ function DiaryHeader({
               {year}
             </span>
           </h1>
-          <button onClick={onNextMonth} className="p-1 rounded-full hover:bg-[var(--muted)] transition-colors">
+          <button
+            onClick={onNextMonth}
+            className="p-1 rounded-full hover:bg-[var(--muted)] transition-colors"
+          >
             <ChevronRight className="w-6 h-6 text-[var(--muted-foreground)]" />
           </button>
         </div>
@@ -369,7 +391,10 @@ function DiaryHeader({
         )}
 
         {lastEdit && (
-          <span className="text-[10px] font-sans font-normal" style={{ color: 'var(--muted-foreground)' }}>
+          <span
+            className="text-[10px] font-sans font-normal"
+            style={{ color: 'var(--muted-foreground)' }}
+          >
             Último registro: {lastEdit}
           </span>
         )}
@@ -378,8 +403,10 @@ function DiaryHeader({
       {/* Today's balance */}
       {todayBalance !== null && (
         <div className="mt-3">
-          <p className="text-[10px] uppercase tracking-widest font-sans font-medium mb-0.5"
-            style={{ color: 'var(--muted-foreground)' }}>
+          <p
+            className="text-[10px] uppercase tracking-widest font-sans font-medium mb-0.5"
+            style={{ color: 'var(--muted-foreground)' }}
+          >
             Saldo hoje
           </p>
           <p
@@ -398,7 +425,14 @@ function DiaryHeader({
 // ─── DiaryPage ────────────────────────────────────────────────────────────────
 
 export default function DiaryPage() {
-  const { visibleYear: year, visibleMonth: month, isCurrentMonth, goToPrevMonth, goToNextMonth, goToToday } = useHorizon()
+  const {
+    visibleYear: year,
+    visibleMonth: month,
+    isCurrentMonth,
+    goToPrevMonth,
+    goToNextMonth,
+    goToToday,
+  } = useHorizon()
   const { user } = useAuth()
 
   const diary = useDiary(year, month)
@@ -454,12 +488,12 @@ export default function DiaryPage() {
   // Wheel tracking
   const wheelAccumulator = useRef(0)
   const wheelTimeout = useRef<number | null>(null)
-  
+
   const handleWheel = (e: React.WheelEvent) => {
     if (Math.abs(e.deltaX) > Math.abs(e.deltaY)) {
       wheelAccumulator.current += e.deltaX
       if (wheelTimeout.current) window.clearTimeout(wheelTimeout.current)
-      
+
       if (wheelAccumulator.current > 80) {
         handleNext()
         wheelAccumulator.current = 0
@@ -519,11 +553,11 @@ export default function DiaryPage() {
   if (error) {
     return (
       <div style={{ background: 'var(--background)', minHeight: '100dvh' }}>
-        <DiaryHeader 
-          year={year} 
-          month={month} 
-          todayBalance={null} 
-          lastEdit={diary.lastEdit ?? null} 
+        <DiaryHeader
+          year={year}
+          month={month}
+          todayBalance={null}
+          lastEdit={diary.lastEdit ?? null}
           isCurrentMonth={isCurrentMonth}
           onPrevMonth={handlePrev}
           onNextMonth={handleNext}
@@ -535,7 +569,7 @@ export default function DiaryPage() {
   }
 
   return (
-    <div 
+    <div
       style={{ background: 'var(--background)', minHeight: '100dvh', overflowX: 'hidden' }}
       onWheel={handleWheel}
       onTouchStart={handleTouchStart}
@@ -558,29 +592,26 @@ export default function DiaryPage() {
       <ColumnHeaders />
 
       {/* Days list */}
-      <div className={`pt-2 transition-all duration-300 ease-in-out ${animClass}`} style={{ background: 'var(--background)' }}>
+      <div
+        className={`pt-2 transition-all duration-300 ease-in-out ${animClass}`}
+        style={{ background: 'var(--background)' }}
+      >
         {isLoading ? (
           <LoadingSkeleton />
         ) : (
           days.map((day) => (
             <div key={day.date} ref={day.isToday ? todayRef : undefined}>
-              <DayRow
-                day={day}
-                onUpdate={diary.updateField}
-                onOpenDiario={setSelectedDiarioDate}
-              />
+              <DayRow day={day} onUpdate={diary.updateField} onOpenDiario={setSelectedDiarioDate} />
             </div>
           ))
         )}
       </div>
 
       {/* Monthly Summary */}
-      {!isLoading && !error && (
-        <MonthlySummary summary={summary} year={year} month={month} />
-      )}
+      {!isLoading && !error && <MonthlySummary summary={summary} year={year} month={month} />}
 
       {/* Diario Panel */}
-      <DiarioPanel 
+      <DiarioPanel
         userId={user?.id}
         date={selectedDiarioDate}
         isOpen={!!selectedDiarioDate}

@@ -66,9 +66,7 @@ export function ProtectedRoute() {
   const { user, isLoading: authLoading } = useAuth()
   const location = useLocation()
 
-  const onboardingStatus = useOnboardingStatus(
-    authLoading || !user ? undefined : user.id,
-  )
+  const onboardingStatus = useOnboardingStatus(authLoading || !user ? undefined : user.id)
 
   // Step 1 — waiting for Supabase session
   if (authLoading) return <FullPageSpinner />

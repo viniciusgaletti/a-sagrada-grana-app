@@ -40,10 +40,12 @@ pnpm typecheck    # verificar tipos
 ## Design System
 
 Tipografia:
+
 - Headlines e números de destaque: Instrument Serif (regular e itálico alternados)
 - Corpo e UI: DM Sans
 
 CSS variables completas estão no PRD seção 3.2. As mais usadas:
+
 - --primary: #6366f1 (light) / #818cf8 (dark)
 - --background: #e7e5e4 (light) / #1e1b18 (dark)
 - --card: #f5f5f4 (light) / #2c2825 (dark)
@@ -51,6 +53,7 @@ CSS variables completas estão no PRD seção 3.2. As mais usadas:
 - --radius: 1.25rem
 
 Estados financeiros:
+
 - Valor estimado: text-primary/35 (opacidade 35%)
 - Valor confirmado: cor padrão do foreground
 - Performance positiva: text-emerald-600 (light) / text-emerald-400 (dark)

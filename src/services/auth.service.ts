@@ -7,23 +7,17 @@ import type { User } from '@supabase/supabase-js'
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
-export type AuthResult<T = void> =
-  | { data: T; error: null }
-  | { data: null; error: string }
+export type AuthResult<T = void> = { data: T; error: null } | { data: null; error: string }
 
 // ─── Error message mapping ────────────────────────────────────────────────────
 
 function translateAuthError(message: string): string {
-  if (message.includes('Invalid login credentials'))
-    return 'E-mail ou senha incorretos.'
-  if (message.includes('Email not confirmed'))
-    return 'Confirme seu e-mail antes de entrar.'
-  if (message.includes('User already registered'))
-    return 'Este e-mail já está cadastrado.'
+  if (message.includes('Invalid login credentials')) return 'E-mail ou senha incorretos.'
+  if (message.includes('Email not confirmed')) return 'Confirme seu e-mail antes de entrar.'
+  if (message.includes('User already registered')) return 'Este e-mail já está cadastrado.'
   if (message.includes('Password should be at least'))
     return 'A senha deve ter pelo menos 6 caracteres.'
-  if (message.includes('Unable to validate email address'))
-    return 'E-mail inválido.'
+  if (message.includes('Unable to validate email address')) return 'E-mail inválido.'
   if (message.includes('Email rate limit exceeded'))
     return 'Muitas tentativas. Aguarde alguns minutos.'
   if (message.includes('network') || message.includes('fetch'))
@@ -56,10 +50,7 @@ export async function signUp(
   return { data: data.user, error: null }
 }
 
-export async function signIn(
-  email: string,
-  password: string,
-): Promise<AuthResult<User>> {
+export async function signIn(email: string, password: string): Promise<AuthResult<User>> {
   const { data, error } = await supabase.auth.signInWithPassword({ email, password })
 
   if (error) return { data: null, error: translateAuthError(error.message) }
@@ -78,9 +69,9 @@ export async function getCurrentUser(): Promise<User | null> {
   return data.user ?? null
 }
 
-export function onAuthStateChange(
-  callback: (user: User | null) => void,
-): { unsubscribe: () => void } {
+export function onAuthStateChange(callback: (user: User | null) => void): {
+  unsubscribe: () => void
+} {
   const { data } = supabase.auth.onAuthStateChange((_event, session) => {
     callback(session?.user ?? null)
   })

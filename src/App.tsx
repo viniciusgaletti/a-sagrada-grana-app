@@ -27,7 +27,10 @@ const SettingsPage = lazy(() => import('@/pages/settings/SettingsPage'))
 // ─── Suspense fallback ────────────────────────────────────────────────────────
 
 const PageLoader = () => (
-  <div className="min-h-[100dvh] flex items-center justify-center" style={{ background: 'var(--background)' }}>
+  <div
+    className="min-h-[100dvh] flex items-center justify-center"
+    style={{ background: 'var(--background)' }}
+  >
     <div className="flex flex-col items-center gap-3">
       <div
         className="h-8 w-8 rounded-full border-4 border-t-transparent animate-spin"
@@ -65,7 +68,9 @@ class GlobalErrorBoundary extends Component<{ children: ReactNode }, ErrorBounda
           className="min-h-screen flex flex-col items-center justify-center p-8 text-center gap-4"
           style={{ background: 'var(--background)', color: 'var(--foreground)' }}
         >
-          <span className="text-4xl" aria-hidden>💸</span>
+          <span className="text-4xl" aria-hidden>
+            💸
+          </span>
           <h1 className="font-serif text-2xl">Algo deu errado</h1>
           <p className="text-sm max-w-sm" style={{ color: 'var(--muted-foreground)' }}>
             {this.state.error?.message ?? 'Erro inesperado. Recarregue a página.'}

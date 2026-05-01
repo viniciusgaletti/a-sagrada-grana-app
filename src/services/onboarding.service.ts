@@ -95,12 +95,10 @@ export async function seedCategories(userId: string): Promise<void> {
     { name: 'Outros', color: '#64748B', icon: 'layout-grid' },
   ]
 
-  const { error } = await supabase
-    .from('categories')
-    .upsert(
-      defaults.map((c) => ({ ...c, user_id: userId, archived: false })),
-      { onConflict: 'user_id,name' },
-    )
+  const { error } = await supabase.from('categories').upsert(
+    defaults.map((c) => ({ ...c, user_id: userId, archived: false })),
+    { onConflict: 'user_id,name' },
+  )
 
   if (error) console.warn('seedCategories fallback error:', error.message)
 }
@@ -130,10 +128,7 @@ export async function createFixedAccounts(
 /**
  * 4. Insere o saldo inicial como transaction de entrada confirmada.
  */
-export async function createInitialBalance(
-  userId: string,
-  amount: number,
-): Promise<void> {
+export async function createInitialBalance(userId: string, amount: number): Promise<void> {
   const { error } = await supabase.from('transactions').insert({
     user_id: userId,
     date: todayISO(),

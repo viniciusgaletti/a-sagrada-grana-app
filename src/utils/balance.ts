@@ -22,14 +22,8 @@ const SIGN: Record<TransactionType, 1 | -1> = {
  * Transactions com status='estimado' são incluídas aqui para projeção
  * (o dashboard as exclui, mas o Diário exibe tudo).
  */
-export function calcDayBalance(
-  prevBalance: number,
-  transactions: Transaction[],
-): number {
-  const delta = transactions.reduce(
-    (acc, tx) => acc + SIGN[tx.type] * tx.amount,
-    0,
-  )
+export function calcDayBalance(prevBalance: number, transactions: Transaction[]): number {
+  const delta = transactions.reduce((acc, tx) => acc + SIGN[tx.type] * tx.amount, 0)
   return prevBalance + delta
 }
 
@@ -72,32 +66,24 @@ export function calcMonthBalance(
 /**
  * Extracts the total amount of a specific type for a day's transactions.
  */
-export function sumByType(
-  transactions: Transaction[],
-  type: TransactionType,
-): number {
-  return transactions
-    .filter((tx) => tx.type === type)
-    .reduce((acc, tx) => acc + tx.amount, 0)
+export function sumByType(transactions: Transaction[], type: TransactionType): number {
+  return transactions.filter((tx) => tx.type === type).reduce((acc, tx) => acc + tx.amount, 0)
 }
 
 /**
  * Calcula o resumo financeiro do mês
  */
-export function calcMonthSummary(
-  snapshotBalance: number,
-  transactions: Transaction[]
-) {
+export function calcMonthSummary(snapshotBalance: number, transactions: Transaction[]) {
   const totalEntradas = sumByType(transactions, 'entrada')
   const totalSaidas = sumByType(transactions, 'saida')
   const totalInvestimentos = sumByType(transactions, 'investimento')
   const totalDiario = sumByType(transactions, 'diario')
-  
+
   const saidaTotal = totalSaidas + totalInvestimentos + totalDiario
   const performanceBruta = totalEntradas - saidaTotal
   const performanceConsumo = totalEntradas - (totalSaidas + totalDiario)
   const taxaEconomia = totalEntradas > 0 ? (totalInvestimentos / totalEntradas) * 100 : 0
-  
+
   return {
     totalEntradas,
     totalSaidas,
@@ -106,7 +92,6 @@ export function calcMonthSummary(
     saidaTotal,
     performanceBruta,
     performanceConsumo,
-    taxaEconomia
+    taxaEconomia,
   }
 }
-

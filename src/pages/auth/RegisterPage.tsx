@@ -14,10 +14,7 @@ const registerSchema = z.object({
     .min(2, 'O apelido deve ter pelo menos 2 caracteres.')
     .max(30, 'O apelido deve ter no máximo 30 caracteres.')
     .trim(),
-  email: z
-    .string()
-    .min(1, 'O e-mail é obrigatório.')
-    .email('Insira um e-mail válido.'),
+  email: z.string().min(1, 'O e-mail é obrigatório.').email('Insira um e-mail válido.'),
   password: z
     .string()
     .min(6, 'A senha deve ter pelo menos 6 caracteres.')
@@ -63,11 +60,10 @@ export default function RegisterPage() {
       <div className="w-full max-w-sm">
         {/* Logo */}
         <div className="text-center mb-10">
-          <span className="text-4xl" aria-hidden>🌿</span>
-          <h1
-            className="font-serif text-3xl mt-3"
-            style={{ color: 'var(--foreground)' }}
-          >
+          <span className="text-4xl" aria-hidden>
+            🌿
+          </span>
+          <h1 className="font-serif text-3xl mt-3" style={{ color: 'var(--foreground)' }}>
             A Sagrada Grana
           </h1>
           <p className="text-sm mt-1" style={{ color: 'var(--muted-foreground)' }}>
@@ -96,11 +92,13 @@ export default function RegisterPage() {
                 autoComplete="nickname"
                 placeholder="Ex: Vini, Mari, João"
                 className="w-full px-4 py-2.5 rounded-[var(--radius)] text-sm outline-none transition-colors focus:ring-2"
-                style={{
-                  background: 'var(--background)',
-                  border: `1px solid ${errors.nickname ? 'var(--destructive)' : 'var(--border)'}`,
-                  color: 'var(--foreground)',
-                } as React.CSSProperties}
+                style={
+                  {
+                    background: 'var(--background)',
+                    border: `1px solid ${errors.nickname ? 'var(--destructive)' : 'var(--border)'}`,
+                    color: 'var(--foreground)',
+                  } as React.CSSProperties
+                }
                 {...register('nickname')}
               />
               {errors.nickname && (
@@ -125,11 +123,13 @@ export default function RegisterPage() {
                 autoComplete="email"
                 placeholder="seu@email.com"
                 className="w-full px-4 py-2.5 rounded-[var(--radius)] text-sm outline-none transition-colors focus:ring-2"
-                style={{
-                  background: 'var(--background)',
-                  border: `1px solid ${errors.email ? 'var(--destructive)' : 'var(--border)'}`,
-                  color: 'var(--foreground)',
-                } as React.CSSProperties}
+                style={
+                  {
+                    background: 'var(--background)',
+                    border: `1px solid ${errors.email ? 'var(--destructive)' : 'var(--border)'}`,
+                    color: 'var(--foreground)',
+                  } as React.CSSProperties
+                }
                 {...register('email')}
               />
               {errors.email && (
@@ -155,11 +155,13 @@ export default function RegisterPage() {
                   autoComplete="new-password"
                   placeholder="Mínimo 6 caracteres"
                   className="w-full px-4 py-2.5 pr-10 rounded-[var(--radius)] text-sm outline-none transition-colors focus:ring-2"
-                  style={{
-                    background: 'var(--background)',
-                    border: `1px solid ${errors.password ? 'var(--destructive)' : 'var(--border)'}`,
-                    color: 'var(--foreground)',
-                  } as React.CSSProperties}
+                  style={
+                    {
+                      background: 'var(--background)',
+                      border: `1px solid ${errors.password ? 'var(--destructive)' : 'var(--border)'}`,
+                      color: 'var(--foreground)',
+                    } as React.CSSProperties
+                  }
                   {...register('password')}
                 />
                 <button
@@ -170,11 +172,7 @@ export default function RegisterPage() {
                   style={{ color: 'var(--muted-foreground)' }}
                   aria-label={showPassword ? 'Ocultar senha' : 'Mostrar senha'}
                 >
-                  {showPassword ? (
-                    <EyeOff className="h-4 w-4" />
-                  ) : (
-                    <Eye className="h-4 w-4" />
-                  )}
+                  {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
                 </button>
               </div>
               {errors.password && (

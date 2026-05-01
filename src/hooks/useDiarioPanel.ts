@@ -43,7 +43,7 @@ export function useDiarioPanel(userId: string | undefined, date: string | null) 
         throw new Error(err.message || 'Erro ao salvar gasto.')
       }
     },
-    [userId, date]
+    [userId, date],
   )
 
   const update = useCallback(
@@ -56,7 +56,7 @@ export function useDiarioPanel(userId: string | undefined, date: string | null) 
         throw new Error(err.message || 'Erro ao atualizar gasto.')
       }
     },
-    []
+    [],
   )
 
   const remove = useCallback(async (id: string) => {

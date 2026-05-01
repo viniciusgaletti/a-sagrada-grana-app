@@ -152,7 +152,11 @@ export function useDiary(year: number, month: number) {
 
       // Optimistic local update
       setTransactions((prev) => {
-        const without = prev.filter((tx) => tx.id !== updated.id && !(tx.date === date && tx.type === type && tx.status === 'confirmado'))
+        const without = prev.filter(
+          (tx) =>
+            tx.id !== updated.id &&
+            !(tx.date === date && tx.type === type && tx.status === 'confirmado'),
+        )
         return [...without, updated].sort((a, b) => a.date.localeCompare(b.date))
       })
 

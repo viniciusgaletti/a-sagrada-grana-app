@@ -155,10 +155,7 @@ export async function upsertTransaction(tx: {
  * Atualiza amount e muda status para 'confirmado' de uma transaction existente.
  * Usado quando o usuário edita um valor pré-populado (estimado → confirmado).
  */
-export async function updateTransactionStatus(
-  id: string,
-  amount: number,
-): Promise<Transaction> {
+export async function updateTransactionStatus(id: string, amount: number): Promise<Transaction> {
   const { data, error } = await supabase
     .from('transactions')
     .update({
@@ -176,7 +173,10 @@ export async function updateTransactionStatus(
 
 // ─── Operações Específicas do Diário ──────────────────────────────────────────
 
-export async function getDayDiarioTransactions(userId: string, date: string): Promise<Transaction[]> {
+export async function getDayDiarioTransactions(
+  userId: string,
+  date: string,
+): Promise<Transaction[]> {
   const { data, error } = await supabase
     .from('transactions')
     .select('*')
@@ -190,11 +190,11 @@ export async function getDayDiarioTransactions(userId: string, date: string): Pr
 }
 
 export async function createDiarioTransaction(
-  userId: string, 
-  date: string, 
-  amount: number, 
-  categoryId: string | null, 
-  description: string | null
+  userId: string,
+  date: string,
+  amount: number,
+  categoryId: string | null,
+  description: string | null,
 ): Promise<Transaction> {
   const { data, error } = await supabase
     .from('transactions')
@@ -215,10 +215,10 @@ export async function createDiarioTransaction(
 }
 
 export async function updateDiarioTransaction(
-  id: string, 
-  amount: number, 
-  categoryId: string | null, 
-  description: string | null
+  id: string,
+  amount: number,
+  categoryId: string | null,
+  description: string | null,
 ): Promise<Transaction> {
   const { data, error } = await supabase
     .from('transactions')
@@ -238,10 +238,7 @@ export async function updateDiarioTransaction(
 }
 
 export async function deleteDiarioTransaction(id: string): Promise<void> {
-  const { error } = await supabase
-    .from('transactions')
-    .delete()
-    .eq('id', id)
+  const { error } = await supabase.from('transactions').delete().eq('id', id)
 
   if (error) throw new Error(`Erro ao excluir gasto: ${error.message}`)
 }

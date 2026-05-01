@@ -38,16 +38,16 @@ export function Shell() {
           <span className="text-xl" aria-hidden>
             🌿
           </span>
-          <span
-            className="font-serif text-lg leading-none"
-            style={{ color: 'var(--foreground)' }}
-          >
+          <span className="font-serif text-lg leading-none" style={{ color: 'var(--foreground)' }}>
             A Sagrada Grana
           </span>
         </div>
 
         {/* Nav links */}
-        <nav className="flex-1 overflow-y-auto py-4 px-3 space-y-0.5" aria-label="Navegação principal">
+        <nav
+          className="flex-1 overflow-y-auto py-4 px-3 space-y-0.5"
+          aria-label="Navegação principal"
+        >
           {NAV_ITEMS.map(({ path, label, icon: Icon }) => (
             <NavLink
               key={path}
@@ -57,9 +57,7 @@ export function Shell() {
               className={({ isActive }) =>
                 cn(
                   'flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium transition-all duration-150',
-                  isActive
-                    ? 'text-primary-foreground'
-                    : 'hover:bg-accent',
+                  isActive ? 'text-primary-foreground' : 'hover:bg-accent',
                 )
               }
               style={({ isActive }) => ({
@@ -130,9 +128,7 @@ export function Shell() {
             >
               {({ isActive }) => (
                 <>
-                  <Icon
-                    className={cn('h-5 w-5 transition-transform', isActive && 'scale-110')}
-                  />
+                  <Icon className={cn('h-5 w-5 transition-transform', isActive && 'scale-110')} />
                   <span className="text-[10px] font-medium leading-none">{label}</span>
                 </>
               )}

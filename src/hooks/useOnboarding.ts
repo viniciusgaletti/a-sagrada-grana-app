@@ -30,14 +30,8 @@ export const step2Schema = z.object({
 
 const fixedAccountSchema = z.object({
   description: z.string().min(1, 'Descrição obrigatória.'),
-  amount: z
-    .number({ message: 'Valor inválido.' })
-    .positive('O valor deve ser maior que zero.'),
-  dueDay: z
-    .number()
-    .int()
-    .min(1, 'Dia inválido.')
-    .max(31, 'Dia inválido.'),
+  amount: z.number({ message: 'Valor inválido.' }).positive('O valor deve ser maior que zero.'),
+  dueDay: z.number().int().min(1, 'Dia inválido.').max(31, 'Dia inválido.'),
   type: z.enum(['entrada', 'saida']),
 })
 
